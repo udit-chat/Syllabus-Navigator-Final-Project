@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Syllabus Navigator — Udit Chaturvedi</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=Bricolage+Grotesque:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0e0c;
+    --paper: #f5f2eb;
+    --accent: #c8401a;
+    --muted: #7a7670;
+    --border: #d8d4cc;
+    --card: #fffefb;
+    --flag-high: #fef2ee;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .hero-left {
+    padding: 80px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid var(--border);
+  }
+  .hero-right {
+    padding: 80px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(40px, 5vw, 68px);
+    line-height: 1.05;
+    font-weight: 400;
+    margin-bottom: 28px;
+  }
+  .hero-desc {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 420px;
+    line-height: 1.8;
+    margin-bottom: 40px;
+  }
+  .cta-row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    padding: 12px 24px;
+    border: 1px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+  .btn:hover { background: var(--ink); color: var(--paper); }
+  .btn-primary { background: var(--accent); border-color: var(--accent); color: white; }
+  .btn-primary:hover { background: #a33214; border-color: #a33214; color: white; }
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-bottom: 48px; }
+  .stat-cell { padding: 28px 24px; background: rgba(245,242,235,0.06); border: 1px solid rgba(245,242,235,0.12); }
+  .stat-num { font-family: 'Instrument Serif', serif; font-size: 52px; line-height: 1; color: var(--paper); margin-bottom: 6px; }
+  .stat-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(245,242,235,0.5); }
+  .tech-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pill { font-family: 'DM Mono', monospace; font-size: 11px; padding: 5px 12px; border: 1px solid rgba(245,242,235,0.2); color: rgba(245,242,235,0.7); }
+  section { padding: 100px 80px; border-top: 1px solid var(--border); }
+  .section-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(30px, 3.5vw, 50px); font-weight: 400; line-height: 1.1; margin-bottom: 20px; }
+  .section-intro { font-size: 16px; color: var(--muted); max-width: 600px; margin-bottom: 60px; }
+  .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .problem-cell { background: var(--card); padding: 40px; }
+  .problem-cell h3 { font-family: 'Instrument Serif', serif; font-size: 22px; font-weight: 400; margin-bottom: 12px; }
+  .problem-cell p { font-size: 15px; color: var(--muted); line-height: 1.8; }
+  .cost-callout { background: var(--ink); color: var(--paper); padding: 40px; margin-top: 1px; grid-column: 1 / -1; }
+  .cost-callout p { font-family: 'Instrument Serif', serif; font-size: 22px; font-style: italic; line-height: 1.6; }
+  .cost-callout span { color: var(--accent); }
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(245,242,235,0.08); }
+  .step { background: rgba(245,242,235,0.04); padding: 36px 28px; }
+  .step-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); margin-bottom: 16px; }
+  .step h3 { font-size: 16px; font-weight: 500; margin-bottom: 10px; line-height: 1.3; }
+  .step p { font-size: 13px; line-height: 1.7; }
+  .arch-box { background: var(--ink); color: var(--paper); padding: 40px 48px; font-family: 'DM Mono', monospace; font-size: 12px; line-height: 1.9; white-space: pre; overflow-x: auto; border: 1px solid var(--border); }
+  .findings-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .finding-card { border: 1px solid var(--border); background: var(--card); padding: 28px; }
+  .finding-card.high { border-left: 3px solid var(--accent); background: var(--flag-high); }
+  .finding-tag { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; margin-bottom: 14px; display: inline-block; }
+  .tag-high { background: var(--accent); color: white; }
+  .tag-med { background: #b8900a; color: white; }
+  .finding-course { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); margin-bottom: 8px; }
+  .finding-card h3 { font-size: 15px; font-weight: 500; margin-bottom: 10px; line-height: 1.4; }
+  .finding-card p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+  .metrics-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-bottom: 48px; }
+  .metric-cell { background: var(--card); padding: 36px 28px; text-align: center; }
+  .metric-big { font-family: 'Instrument Serif', serif; font-size: 56px; line-height: 1; color: var(--ink); margin-bottom: 8px; }
+  .metric-big span { color: var(--accent); }
+  .metric-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .course-table { border: 1px solid var(--border); width: 100%; margin-bottom: 24px; }
+  .course-row { display: grid; grid-template-columns: 130px 1fr 90px 80px; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--border); align-items: center; font-size: 13px; }
+  .course-row:last-child { border-bottom: none; }
+  .course-row.header { background: var(--border); font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .course-code { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); }
+  .flag-badge { font-family: 'DM Mono', monospace; font-size: 11px; padding: 3px 10px; background: var(--flag-high); border: 1px solid var(--accent); color: var(--accent); text-align: center; }
+  .recall-badge { font-family: 'DM Mono', monospace; font-size: 11px; padding: 3px 10px; background: #eef6ee; border: 1px solid #2d7a2d; color: #2d7a2d; text-align: center; }
+  .about-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: start; }
+  .about-name { font-family: 'Instrument Serif', serif; font-size: 36px; font-weight: 400; margin-bottom: 8px; }
+  .about-title { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.08em; margin-bottom: 24px; }
+  .about-text { font-size: 15px; color: var(--muted); line-height: 1.9; }
+  footer { padding: 40px 80px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-left > * { animation: fadeUp 0.7s ease forwards; opacity: 0; }
+  .hero-left > *:nth-child(1) { animation-delay: 0.1s; }
+  .hero-left > *:nth-child(2) { animation-delay: 0.25s; }
+  .hero-left > *:nth-child(3) { animation-delay: 0.4s; }
+  .hero-left > *:nth-child(4) { animation-delay: 0.55s; }
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left, section { padding: 60px 32px; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .findings-grid { grid-template-columns: 1fr; }
+    .metrics-row { grid-template-columns: 1fr 1fr; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .problem-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+    .course-row { grid-template-columns: 100px 1fr 70px; }
+    .course-row > *:last-child { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-left">
+    <p class="eyebrow">INFO 7375 · Spring 2025 · Northeastern University</p>
+    <h1>The Syllabus<br><em>Navigator</em></h1>
+    <p class="hero-desc">An agentic AI system that audits university syllabi for compliance failures — the silent errors that cost students grades before they even begin.</p>
+    <div class="cta-row">
+      <a href="https://github.com/uditchaturvedi/syllabus-navigator" class="btn btn-primary" target="_blank">View on GitHub</a>
+      <a href="#findings" class="btn">See Findings</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="stat-grid">
+      <div class="stat-cell"><div class="stat-num">6</div><div class="stat-label">Syllabi audited</div></div>
+      <div class="stat-cell"><div class="stat-num">31</div><div class="stat-label">Flags raised</div></div>
+      <div class="stat-cell"><div class="stat-num">21</div><div class="stat-label">Real violations</div></div>
+      <div class="stat-cell"><div class="stat-num">100<span style="font-size:28px">%</span></div><div class="stat-label">Recall per course</div></div>
+    </div>
+    <div class="tech-pills">
+      <span class="pill">RAG</span>
+      <span class="pill">Gemini 2.5 Flash</span>
+      <span class="pill">FAISS</span>
+      <span class="pill">LangChain</span>
+      <span class="pill">Prompt Engineering</span>
+      <span class="pill">Google Colab</span>
+    </div>
+  </div>
+</div>
+
+<section>
+  <p class="section-label">01 — The Problem</p>
+  <h2>Silent failures in<br>academic administration</h2>
+  <p class="section-intro">It is 11 PM. A student is hunting for one stable fact in a 15-page PDF. The syllabus says one thing. The calendar says another. Neither is wrong — but both cannot be right.</p>
+  <div class="problem-grid">
+    <div class="problem-cell">
+      <h3>The human cost</h3>
+      <p>A student loses marks because a due date says "Thursday, October 12th" but October 12th is a Wednesday. A TA applies the wrong grading scale because the syllabus contradicts university policy. These errors are invisible until they cause real damage.</p>
+    </div>
+    <div class="problem-cell">
+      <h3>Why base AI fails here</h3>
+      <p>A base language model is a yes-man. Ask it to summarize a flawed syllabus and it faithfully reproduces the errors. It lacks the computational skepticism to look outside the document and verify facts against an authoritative source of truth.</p>
+    </div>
+    <div class="cost-callout">
+      <p>The cost of non-existence: <span>$4,500 retaken courses</span>, hours of TA labor answering identical emails, and students trapped in expensive uncertainty — all caused by errors that were always there, just never caught.</p>
+    </div>
+  </div>
+</section>
+
+<section style="background: var(--ink); color: var(--paper); border-top: none;">
+  <p class="section-label" style="color: var(--accent);">02 — How It Works</p>
+  <h2 style="color: var(--paper);">Four steps from<br>PDF to verdict</h2>
+  <p class="section-intro" style="color: rgba(245,242,235,0.6); margin-bottom: 48px;">RAG + Prompt Engineering — two core generative AI techniques — combined into an agentic compliance auditor.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3 style="color: var(--paper);">Ingest &amp; Chunk</h3>
+      <p style="color: rgba(245,242,235,0.55);">PDFs read with pypdf, split into 500-character overlapping chunks with 50-char overlap using a custom Python splitter. Overlap prevents boundary information loss.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3 style="color: var(--paper);">Embed &amp; Index</h3>
+      <p style="color: rgba(245,242,235,0.55);">Each chunk converted to a vector embedding using Google's text-embedding-004 model and stored in a FAISS similarity index. 39 chunks indexed per syllabus.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3 style="color: var(--paper);">Retrieve &amp; Audit</h3>
+      <p style="color: rgba(245,242,235,0.55);">5 most relevant policy chunks retrieved via RAG similarity search. A structured prompt with temperature=0 instructs Gemini 2.5 Flash to act as a strict compliance auditor.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h3 style="color: var(--paper);">Flag &amp; Report</h3>
+      <p style="color: rgba(245,242,235,0.55);">Structured output — FLAG type, description, location, severity — parsed into a formatted Discrepancy Report. Performance evaluated with Retrieval Recall against human ground truth.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <p class="section-label">03 — Architecture</p>
+  <h2>System design</h2>
+  <p class="section-intro">Every component is visible, explainable, and reproducible. Temperature=0 ensures the same syllabus always produces the same flags.</p>
+  <div class="arch-box">INPUT LAYER
+┌─────────────────────┐    ┌──────────────────────────┐
+│   6 Syllabus PDFs   │    │  Policy Knowledge Base   │
+│  UIUX · WEBD · DMDD │    │  Late work · Attendance  │
+│  Prompt · DSEM · ORM│    │  Calendar · Grading rules│
+└──────────┬──────────┘    └────────────┬─────────────┘
+           │                            │
+           ▼                            ▼
+RAG PIPELINE                      RETRIEVAL
+┌─────────────────────┐    ┌──────────────────────────┐
+│   pypdf Extractor   │    │   FAISS Similarity Search│
+│   Text → Raw String │    │   Top 5 relevant chunks  │
+└──────────┬──────────┘    └────────────┬─────────────┘
+           ▼                            │
+┌─────────────────────┐                 │
+│ Custom Text Chunker │                 │
+│ 500 chars / 50 over │                 │
+└──────────┬──────────┘                 │
+           ▼                            │
+┌─────────────────────┐                 │
+│  text-embedding-004 │                 │
+│  Vector Embeddings  │                 │
+└──────────┬──────────┘                 │
+           ▼                            │
+┌─────────────────────┐                 │
+│  FAISS Vector Store │─────────────────┘
+│  39 chunks indexed  │
+└─────────────────────┘
+
+INFERENCE LAYER
+┌──────────────────────────────────────────────────────┐
+│             AUDIT PROMPT (Prompt Engineering)        │
+│  Role: "You are a strict compliance auditor"         │
+│  Input: Syllabus [:6000 chars] + RAG policy chunks   │
+│  Rules: 4 issue types · structured output enforced   │
+│  Format: FLAG · Description · Location · Severity    │
+└─────────────────────────┬────────────────────────────┘
+                          ▼
+┌──────────────────────────────────────────────────────┐
+│         Gemini 2.5 Flash  (temperature=0)            │
+│         Deterministic · Reproducible · ~50s/audit    │
+└─────────────────────────┬────────────────────────────┘
+                          ▼
+OUTPUT LAYER
+┌──────────────────────────────────────────────────────┐
+│                 DISCREPANCY REPORT                   │
+│  31 total flags · 22 high severity · 6/6 courses     │
+│  Retrieval Recall: 100% per course · 67.7% overall   │
+└──────────────────────────────────────────────────────┘
+
+AI COMPONENTS : RAG (FAISS + text-embedding-004) + Prompt Engineering
+FRAMEWORK     : LangChain + LangChain Google GenAI
+MODEL         : Gemini 2.5 Flash · text-embedding-004
+ENVIRONMENT   : Google Colab · Python 3.12</div>
+</section>
+
+<section id="findings">
+  <p class="section-label">04 — Key Findings</p>
+  <h2>Real errors in<br>real documents</h2>
+  <p class="section-intro">Every finding produced automatically. None were planted. All 6 courses had at least one compliance issue.</p>
+  <div class="findings-grid">
+    <div class="finding-card high">
+      <span class="finding-tag tag-high">High · Policy Conflict</span>
+      <div class="finding-course">DAMG 6210 — Database Design</div>
+      <h3>Grading scale contradicts university policy</h3>
+      <p>Syllabus awards A at 94%+. University requires 95%+. A student scoring 94.5% gets a different grade depending on which document their professor follows. Direct GPA impact.</p>
+    </div>
+    <div class="finding-card high">
+      <span class="finding-tag tag-high">High · Date Issue</span>
+      <div class="finding-course">INFO 6105 — Data Science Methods</div>
+      <h3>Entire schedule uses wrong semester dates</h3>
+      <p>A Spring 2025 syllabus contains a schedule running September–December (Fall 2024 dates). All 15 weeks are misaligned. The Assignment Due column is completely blank.</p>
+    </div>
+    <div class="finding-card high">
+      <span class="finding-tag tag-high">High · Date Issue</span>
+      <div class="finding-course">INFO 6150 — Web Design</div>
+      <h3>Class scheduled during Spring Break</h3>
+      <p>Class 8 is listed on 03/03/2025 — the first day of Spring Break. University policy: no classes during the week of March 3, 2025.</p>
+    </div>
+    <div class="finding-card high">
+      <span class="finding-tag tag-high">High · Date Issue</span>
+      <div class="finding-course">CSYE 7280 — UX Design &amp; Testing</div>
+      <h3>Term year mismatch on page 1</h3>
+      <p>Course information reads "Term and Year: Fall 2024" while the header says "SPRING 25" and the schedule shows Spring 2025 dates — a direct contradiction in the same document.</p>
+    </div>
+    <div class="finding-card high">
+      <span class="finding-tag tag-high">High · Date Issue</span>
+      <div class="finding-course">INFO 7374 — Operational Risk</div>
+      <h3>Week 9 class scheduled on Spring Break</h3>
+      <p>Week 9 is dated 3/4/2025, directly within Spring Break (week of March 3, 2025). University policy: no classes that week. Students cannot know this from the syllabus alone.</p>
+    </div>
+    <div class="finding-card">
+      <span class="finding-tag tag-med">Medium · Policy Conflict</span>
+      <div class="finding-course">INFO 7375 — Prompt Engineering</div>
+      <h3>Late policy contradicts university standard</h3>
+      <p>Syllabus applies 5% per day deduction. University standard: no credit for late work submitted without prior faculty communication. These are fundamentally incompatible policies.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <p class="section-label">05 — Evaluation</p>
+  <h2>Performance metrics</h2>
+  <p class="section-intro">Measured against a human ground truth established by manually reviewing all 6 syllabi. 21 real issues identified across 6 courses.</p>
+  <div class="metrics-row">
+    <div class="metric-cell"><div class="metric-big">100<span>%</span></div><div class="metric-label">Recall per course</div></div>
+    <div class="metric-cell"><div class="metric-big">67<span>%</span></div><div class="metric-label">Overall precision</div></div>
+    <div class="metric-cell"><div class="metric-big">21</div><div class="metric-label">Real issues confirmed</div></div>
+    <div class="metric-cell"><div class="metric-big">10</div><div class="metric-label">False positives</div></div>
+  </div>
+  <div class="course-table">
+    <div class="course-row header">
+      <span>Course</span><span>Title</span><span>Flags</span><span>Recall</span>
+    </div>
+    <div class="course-row">
+      <span class="course-code">CSYE 7280</span><span>UX Design and Testing</span>
+      <span class="flag-badge">5 flags</span><span class="recall-badge">100%</span>
+    </div>
+    <div class="course-row">
+      <span class="course-code">INFO 6150</span><span>Web Design &amp; UX Engineering</span>
+      <span class="flag-badge">5 flags</span><span class="recall-badge">100%</span>
+    </div>
+    <div class="course-row">
+      <span class="course-code">DAMG 6210</span><span>Database Design</span>
+      <span class="flag-badge">4 flags</span><span class="recall-badge">100%</span>
+    </div>
+    <div class="course-row">
+      <span class="course-code">INFO 7375</span><span>Prompt Engineering</span>
+      <span class="flag-badge">7 flags</span><span class="recall-badge">100%</span>
+    </div>
+    <div class="course-row">
+      <span class="course-code">INFO 6105</span><span>Data Science Methods</span>
+      <span class="flag-badge">6 flags</span><span class="recall-badge">100%</span>
+    </div>
+    <div class="course-row">
+      <span class="course-code">INFO 7374</span><span>Operational Risk</span>
+      <span class="flag-badge">4 flags</span><span class="recall-badge">100%</span>
+    </div>
+  </div>
+  <p style="font-size:14px; color:var(--muted); max-width:640px; line-height:1.8;">
+    The 10 false positives share one root cause: the 6,000-character context window truncates policies appearing later in longer documents. Increasing to full document length would eliminate most false positives. This is a known, documented, fixable limitation.
+  </p>
+</section>
+
+<section>
+  <p class="section-label">06 — About</p>
+  <div class="about-grid">
+    <div>
+      <div class="about-name">Udit Chaturvedi</div>
+      <div class="about-title">INFO 7375 — Prompt Engineering for Generative AI<br>Northeastern University · Spring 2025</div>
+      <p class="about-text">Final project for INFO 7375. Implements RAG and Prompt Engineering applied to a real compliance problem in academic administration that affects every student at every university.</p>
+      <br>
+      <p class="about-text">Built in 4 days using Python, Google Colab, LangChain, FAISS, and the Gemini 2.5 Flash API. All 6 syllabi are real Northeastern University MGEN program documents from Spring 2025.</p>
+      <br>
+      <p class="about-text"><strong>Future improvements:</strong> Full document context window to eliminate false positives · Streamlit web interface · Structured academic calendar integration · Multi-university policy comparison.</p>
+    </div>
+    <div>
+      <div style="border: 1px solid var(--border); padding: 32px; background: var(--card);">
+        <p style="font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px;">Technical Stack</p>
+        <div style="display: flex; flex-direction: column; gap: 0;">
+          <div style="display: flex; justify-content: space-between; font-size: 13px; padding: 12px 0; border-bottom: 1px solid var(--border);">
+            <span style="color: var(--muted);">LLM</span>
+            <span style="font-family: 'DM Mono', monospace; font-size: 11px;">Gemini 2.5 Flash</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 13px; padding: 12px 0; border-bottom: 1px solid var(--border);">
+            <span style="color: var(--muted);">Embeddings</span>
+            <span style="font-family: 'DM Mono', monospace; font-size: 11px;">text-embedding-004</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 13px; padding: 12px 0; border-bottom: 1px solid var(--border);">
+            <span style="color: var(--muted);">Vector Store</span>
+            <span style="font-family: 'DM Mono', monospace; font-size: 11px;">FAISS (Meta)</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 13px; padding: 12px 0; border-bottom: 1px solid var(--border);">
+            <span style="color: var(--muted);">Framework</span>
+            <span style="font-family: 'DM Mono', monospace; font-size: 11px;">LangChain</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 13px; padding: 12px 0; border-bottom: 1px solid var(--border);">
+            <span style="color: var(--muted);">PDF Reading</span>
+            <span style="font-family: 'DM Mono', monospace; font-size: 11px;">pypdf</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 13px; padding: 12px 0; border-bottom: 1px solid var(--border);">
+            <span style="color: var(--muted);">Temperature</span>
+            <span style="font-family: 'DM Mono', monospace; font-size: 11px;">0 (deterministic)</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 13px; padding: 12px 0; border-bottom: 1px solid var(--border);">
+            <span style="color: var(--muted);">Chunking</span>
+            <span style="font-family: 'DM Mono', monospace; font-size: 11px;">500 chars / 50 overlap</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 13px; padding: 12px 0;">
+            <span style="color: var(--muted);">Environment</span>
+            <span style="font-family: 'DM Mono', monospace; font-size: 11px;">Google Colab · Python 3.12</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Syllabus Navigator · Udit Chaturvedi · INFO 7375 · Spring 2025</span>
+  <span>RAG + Prompt Engineering · Gemini 2.5 Flash · FAISS · LangChain</span>
+</footer>
+
+</body>
+</html>
