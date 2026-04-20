@@ -1,7 +1,7 @@
 # Syllabus-Navigator-Final-Project
 ### An Agentic Academic Compliance Auditor
 
-**Udit Chaturvedi · INFO 7375 Prompt Engineering for Generative AI · Northeastern University · Spring 2025**
+**Udit Chaturvedi · INFO 7375 Prompt Engineering for Generative AI · Northeastern University · Spring 2026**
 
 ---
 
