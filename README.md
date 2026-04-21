@@ -133,6 +133,7 @@ The 13 false positives share a single root cause: the 6,000-character context wi
 - No student data is processed — only instructor-facing policy documents
 - The system flags issues for human review; it does not make final determinations
 - API calls are made via private key; no document content is used for model training
+- This system processes only publicly distributed institutional documents. No student records, personal data, or user-generated content is collected, stored, or transmitted at any point.
 
 ---
 
