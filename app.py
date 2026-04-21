@@ -10,14 +10,14 @@ st.set_page_config(
 )
 
 st.markdown("""
-<style>
-    .flag-high { background-color: #fef2ee; border-left: 4px solid #c8401a; padding: 12px 16px; margin: 8px 0; border-radius: 4px; }
-    .flag-med  { background-color: #fefaee; border-left: 4px solid #b8900a; padding: 12px 16px; margin: 8px 0; border-radius: 4px; }
-    .flag-low  { background-color: #f0f8f0; border-left: 4px solid #2d7a2d; padding: 12px 16px; margin: 8px 0; border-radius: 4px; }
+    <style>
+    .flag-high { background-color: #fef2ee; border-left: 4px solid #c8401a; padding: 12px 16px; margin: 8px 0; border-radius: 4px; color: #0f0e0c; }
+    .flag-med  { background-color: #fefaee; border-left: 4px solid #b8900a; padding: 12px 16px; margin: 8px 0; border-radius: 4px; color: #0f0e0c; }
+    .flag-low  { background-color: #f0f8f0; border-left: 4px solid #2d7a2d; padding: 12px 16px; margin: 8px 0; border-radius: 4px; color: #0f0e0c; }
     .tag-high  { background-color: #c8401a; color: white; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: bold; }
     .tag-med   { background-color: #b8900a; color: white; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: bold; }
     .tag-low   { background-color: #2d7a2d; color: white; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: bold; }
-    .summary-box { background-color: #f5f2eb; padding: 20px; border-radius: 8px; margin: 16px 0; }
+    .summary-box { background-color: #f5f2eb; padding: 20px; border-radius: 8px; margin: 16px 0; color: #0f0e0c; }
 </style>
 """, unsafe_allow_html=True)
 
