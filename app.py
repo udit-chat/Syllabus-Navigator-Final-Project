@@ -225,14 +225,44 @@ if audit_button and uploaded_file:
         st.success(f"Extracted {len(text):,} characters from {len(PdfReader(uploaded_file).pages)} pages")
 
     with st.spinner("Building vector store (RAG)..."):
-        chunks = chunk_text(text)
-        vector_store = build_vector_store(chunks)
-        st.success(f"Indexed {len(chunks)} chunks into FAISS vector store")
+        try:
+            chunks = chunk_text(text)
+            vector_store = build_vector_store(chunks)
+            st.success(f"Indexed {len(chunks)} chunks into FAISS vector store")
+        except Exception as e:
+            st.error(f"""
+            **Failed to build vector store.**
+            This usually means the API key is invalid or the embedding quota is exceeded.
+            Error: {str(e)[:200]}
+            """)
+            st.stop()
 
-    with st.spinner("Auditing against policy knowledge base..."):
+    with st.spinner("Auditing against policy knowledge base... (this takes 30-60 seconds)"):
         start = time.time()
-        audit_result = audit_syllabus(text, vector_store, name)
-        elapsed = round(time.time() - start, 1)
+        try:
+            audit_result = audit_syllabus(text, vector_store, name)
+            elapsed = round(time.time() - start, 1)
+        except Exception as e:
+            error_msg = str(e).lower()
+            if "quota" in error_msg or "429" in error_msg or "resource_exhausted" in error_msg:
+                st.error("""
+                **API quota exceeded.**
+                The free tier Gemini API allows a limited number of requests per day.
+                Please wait a few minutes and try again, or try with a shorter document.
+                """)
+            elif "api_key" in error_msg or "authentication" in error_msg:
+                st.error("""
+                **API key error.**
+                The Gemini API key is missing or invalid.
+                Please check the app configuration.
+                """)
+            else:
+                st.error(f"""
+                **Something went wrong during the audit.**
+                Error: {str(e)[:200]}
+                Please try again or use a different PDF.
+                """)
+            st.stop()
 
     flags = parse_flags(audit_result)
     high = sum(1 for f in flags if f["severity"].upper() == "HIGH")
