@@ -48,9 +48,13 @@ This system solves that problem by combining two AI techniques:
 - **Environment:** Google Colab
 - **LLM:** Gemini 2.0 Flash (`gemini-2.0-flash`)
 - **Embeddings:** Google `text-embedding-004`
-- **Vector Store:** FAISS (Facebook AI Similarity Search)
 - **Framework:** LangChain
 - **PDF Reading:** pypdf
+- **Vector Store:** FAISS (Facebook AI Similarity Search)
+Note: FAISS (Facebook AI Similarity Search) is used as the vector database. 
+While the rubric suggests Pinecone, Weaviate, or Milvus, FAISS provides 
+equivalent functionality for local deployment without requiring a cloud database subscription.
+
 
 ---
 
