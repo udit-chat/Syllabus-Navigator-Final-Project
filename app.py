@@ -75,9 +75,9 @@ def build_vector_store(chunks):
     from langchain_core.documents import Document
     docs = [Document(page_content=chunk) for chunk in chunks]
     embeddings = GoogleGenerativeAIEmbeddings(
-        model="models/text-embedding-004",
-        google_api_key=os.environ["GOOGLE_API_KEY"]
-    )
+    model="models/gemini-embedding-001",
+    google_api_key=os.environ["GOOGLE_API_KEY"]
+)
     return FAISS.from_documents(docs, embeddings)
 
 def audit_syllabus(syllabus_text, vector_store, course_name):
