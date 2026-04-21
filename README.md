@@ -150,4 +150,10 @@ The 13 false positives share a single root cause: the 6,000-character context wi
 5. Add fine-tuned evaluation rubric per course type
 
 ---
+## What This Notebook Does
+## Live Demo
 
+Try the interactive auditor here:
+**https://syllabus-navigator-final-project-evhm5vjugwk6eneunzxapr.streamlit.app/**
+
+Upload any university syllabus PDF and see compliance flags generated in real time.
